@@ -1,0 +1,91 @@
+---
+import "../styles/global.css";
+interface Props { title?: string; description?: string; }
+const {
+  title = "ReVita — Gabinet Fizjoterapii i Rehabilitacji | Warszawa",
+  description = "ReVita to nowoczesny gabinet fizjoterapii i rehabilitacji w Warszawie. Oferujemy fizjoterapię, terapię manualną, masaż leczniczy, rehabilitację po urazach i fizykoterapię."
+} = Astro.props;
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Epilogue:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="antialiased">
+    <slot />
+    <script>
+      // Reveal on scroll
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll(".reveal, .reveal-left, .reveal-right").forEach((el) => io.observe(el));
+
+      // Nav scroll state (SPEC trap #2)
+      const nav = document.getElementById("nav");
+      if (nav) {
+        const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 40);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+      }
+
+      // Mobile menu
+      const burger = document.getElementById("burger");
+      const mobileMenu = document.getElementById("mobile-menu");
+      burger?.addEventListener("click", () => {
+        mobileMenu?.classList.toggle("hidden");
+        const spans = burger.querySelectorAll("span");
+        burger.classList.toggle("open");
+      });
+      mobileMenu?.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          mobileMenu?.classList.add("hidden");
+          burger?.classList.remove("open");
+        })
+      );
+
+      // Animated counters
+      const counters = document.querySelectorAll("[data-count]");
+      const counterIO = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const el = e.target as HTMLElement;
+            const target = parseInt(el.dataset.count || "0");
+            const suffix = el.dataset.suffix || "";
+            let current = 0;
+            const duration = 1800;
+            const step = target / (duration / 16);
+            const timer = setInterval(() => {
+              current = Math.min(current + step, target);
+              el.textContent = Math.floor(current) + suffix;
+              if (current >= target) clearInterval(timer);
+            }, 16);
+            counterIO.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      counters.forEach((c) => counterIO.observe(c));
+
+      // Parallax on hero
+      const heroBg = document.getElementById("hero-bg");
+      if (heroBg) {
+        window.addEventListener("scroll", () => {
+          const y = window.scrollY;
+          heroBg.style.transform = `translateY(${y * 0.3}px)`;
+        }, { passive: true });
+      }
+    </script>
+  </body>
+</html>
