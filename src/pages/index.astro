@@ -1,623 +1,309 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const nav_links = [
-  { href: "#o-nas", label: "O nas" },
-  { href: "#uslugi", label: "Usługi" },
-  { href: "#terapeuci", label: "Terapeuci" },
-  { href: "#cennik", label: "Cennik" },
-  { href: "#rezerwacja", label: "Rezerwacja" },
-];
+const U = "https://images.unsplash.com/";
+const q = "?auto=format&fit=crop&q=80";
+const img = {
+  hero:  U + "photo-1571019613454-1cb2f99b2d8b" + q + "&w=1200",
+  onas1: U + "photo-1559757175-0eb30cd8c063" + q + "&w=700",
+  onas2: U + "photo-1598300042247-d088f8ab3a91" + q + "&w=700",
+  t1:    U + "photo-1607990281513-2c110a25bd8c" + q + "&w=500",
+  t2:    U + "photo-1612349317150-e413f6a5b16d" + q + "&w=500",
+  t3:    U + "photo-1559839734-2b71ea197ec2" + q + "&w=500",
+  t4:    U + "photo-1582750433449-648ed127bb54" + q + "&w=500",
+};
 
 const uslugi = [
-  {
-    icon: `<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10"><path d="M20 4C11.163 4 4 11.163 4 20s7.163 16 16 16 16-7.163 16-16S28.837 4 20 4zm0 4a4 4 0 110 8 4 4 0 010-8zm0 22c-4 0-7.56-2.04-9.68-5.14C10.36 22.2 16 20.4 20 20.4c4 0 9.64 1.8 9.68 4.46C27.56 27.96 24 30 20 30z" fill="currentColor"/>`,
-    name: "Fizjoterapia",
-    desc: "Kompleksowa ocena funkcjonalna i indywidualny plan terapii. Przywracamy sprawność po operacjach, urazach i schorzeniach narządu ruchu.",
-    price: "od 180 zł",
-    tag: "Najpopularniejsza",
-  },
-  {
-    icon: `<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10"><path d="M8 20c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12S8 26.627 8 20zm12-8a8 8 0 100 16A8 8 0 0020 12zm-1 4h2v5.586l3.707 3.707-1.414 1.414L19 23.414V16z" fill="currentColor"/>`,
-    name: "Terapia manualna",
-    desc: "Specjalistyczne techniki mobilizacji stawów i tkanek miękkich. Skuteczna w leczeniu bólu kręgosłupa, szyi i stawów obwodowych.",
-    price: "od 200 zł",
-    tag: "",
-  },
-  {
-    icon: `<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10"><path d="M14 8h12a2 2 0 012 2v4H12v-4a2 2 0 012-2zM10 16h20l-2 14H12L10 16zm8 4v6h4v-6h-4z" fill="currentColor"/>`,
-    name: "Masaż leczniczy",
-    desc: "Profesjonalny masaż terapeutyczny redukujący napięcia mięśniowe, poprawiający krążenie i przyspieszający regenerację tkanek.",
-    price: "od 130 zł",
-    tag: "",
-  },
-  {
-    icon: `<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10"><path d="M20 6l3.09 9.51H33l-8.09 5.88 3.09 9.51L20 25.02l-8 5.88 3.09-9.51L7 15.51h9.91z" fill="currentColor"/>`,
-    name: "Rehabilitacja po urazach",
-    desc: "Programy powrotu do aktywności po skręceniach, złamaniach i operacjach ortopedycznych. Pełna opieka od ostrego urazu do sportu.",
-    price: "od 170 zł",
-    tag: "Specjalność",
-  },
-  {
-    icon: `<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10"><path d="M12 10h16v4H12zm-2 6h20l2 2v12H8V18l2-2zm4 4v8h12v-8H14zm3 2h6v4h-6v-4z" fill="currentColor"/>`,
-    name: "Fizykoterapia",
-    desc: "Zabiegi z użyciem ultradźwięków, laseroterapii, prądów TENS/EMS i magnetoterapii. Wspomagają gojenie i łagodzą ból.",
-    price: "od 80 zł",
-    tag: "",
-  },
+  { nr: "01", name: "Fizjoterapia",           desc: "Kompleksowa ocena funkcjonalna i indywidualny plan terapii. Przywracamy sprawność po operacjach, urazach i schorzeniach narządu ruchu.",           price: "od 180 zł", bg: "bg-[#b6ff1a]",    tag: "Najpopularniejsza" },
+  { nr: "02", name: "Terapia manualna",        desc: "Specjalistyczne techniki mobilizacji stawów i tkanek miękkich. Skuteczna w leczeniu bólu kręgosłupa, szyi i stawów obwodowych.",                  price: "od 200 zł", bg: "bg-[#ff6a00]",    tag: "" },
+  { nr: "03", name: "Masaż leczniczy",         desc: "Profesjonalny masaż terapeutyczny redukujący napięcia mięśniowe, poprawiający krążenie i przyspieszający regenerację tkanek.",                    price: "od 130 zł", bg: "bg-[#ffffff]",    tag: "" },
+  { nr: "04", name: "Rehab. po urazach",       desc: "Programy powrotu do aktywności po skręceniach, złamaniach i operacjach ortopedycznych. Pełna opieka od ostrego urazu do sportu.",                 price: "od 170 zł", bg: "bg-[#b6ff1a]",    tag: "Specjalność" },
+  { nr: "05", name: "Fizykoterapia",           desc: "Zabiegi z użyciem ultradźwięków, laseroterapii, prądów TENS/EMS i magnetoterapii. Wspomagają gojenie i łagodzą ból.",                            price: "od 80 zł",  bg: "bg-[#15803d]",    tag: "" },
 ];
 
 const terapeuci = [
-  {
-    imie: "mgr Katarzyna Wiśniewska",
-    spec: "Fizjoterapia ortopedyczna",
-    doswiadczenie: "8 lat doświadczenia",
-    opis: "Specjalistka terapii manualnej i rehabilitacji ortopedycznej. Absolwentka AWF Warszawa, certyfikowana terapeutka Mulligan i McKenzie.",
-    foto: "photo-1607990281513-2c110a25bd8c",
-    initials: "KW",
-  },
-  {
-    imie: "mgr Paweł Kowalski",
-    spec: "Neurorehabilitacja",
-    doswiadczenie: "12 lat doświadczenia",
-    opis: "Ekspert w zakresie neurorehabilitacji i terapii po udarach. Prowadzi szkolenia z metody PNF dla fizjoterapeutów w całej Polsce.",
-    foto: "photo-1612349317150-e413f6a5b16d",
-    initials: "PK",
-  },
-  {
-    imie: "mgr Anna Zielińska",
-    spec: "Fizjoterapia sportowa",
-    doswiadczenie: "6 lat doświadczenia",
-    opis: "Fizjoterapeutka sportowa współpracująca z klubami piłkarskimi. Specjalizuje się w prewencji urazów i powrocie sportowców do gry.",
-    foto: "photo-1559839734-2b71ea197ec2",
-    initials: "AZ",
-  },
-  {
-    imie: "mgr Tomasz Nowak",
-    spec: "Terapia bólu kręgosłupa",
-    doswiadczenie: "9 lat doświadczenia",
-    opis: "Specjalista terapii punktów spustowych i terapii powięziowej. Autor kursów z diagnostyki i leczenia dysfunkcji kręgosłupa.",
-    foto: "photo-1582750433449-648ed127bb54",
-    initials: "TN",
-  },
+  { imie: "mgr Katarzyna Wiśniewska", spec: "Fizjoterapia ortopedyczna",   doswiadczenie: "8 lat",  opis: "Specjalistka terapii manualnej. Certyfikowana terapeutka Mulligan i McKenzie.", img: img.t1, rot: "rot-2" },
+  { imie: "mgr Paweł Kowalski",       spec: "Neurorehabilitacja",           doswiadczenie: "12 lat", opis: "Ekspert neurorehabilitacji i terapii po udarach. Prowadzi szkolenia z metody PNF.",  img: img.t2, rot: "rot-1" },
+  { imie: "mgr Anna Zielińska",       spec: "Fizjoterapia sportowa",        doswiadczenie: "6 lat",  opis: "Fizjoterapeutka sportowa współpracująca z klubami piłkarskimi.",                    img: img.t3, rot: "rot-3" },
+  { imie: "mgr Tomasz Nowak",         spec: "Terapia bólu kręgosłupa",     doswiadczenie: "9 lat",  opis: "Specjalista terapii punktów spustowych i terapii powięziowej.",                    img: img.t4, rot: "rot-2" },
 ];
 
 const cennik = [
-  { usluga: "Konsultacja fizjoterapeutyczna (60 min)", cena: "180 zł" },
-  { usluga: "Terapia manualna (60 min)", cena: "200 zł" },
-  { usluga: "Masaż leczniczy (45 min)", cena: "130 zł" },
-  { usluga: "Masaż leczniczy (60 min)", cena: "160 zł" },
-  { usluga: "Rehabilitacja po urazach (60 min)", cena: "170 zł" },
-  { usluga: "Fizykoterapia — pojedynczy zabieg", cena: "80 zł" },
-  { usluga: "Fizykoterapia — pakiet 5 zabiegów", cena: "350 zł" },
-  { usluga: "Pakiet rehabilitacyjny (10 wizyt)", cena: "1 500 zł" },
-  { usluga: "Wizyta kontrolna (30 min)", cena: "100 zł" },
+  ["Konsultacja fizjoterapeutyczna (60 min)", "180 zł"],
+  ["Terapia manualna (60 min)",               "200 zł"],
+  ["Masaż leczniczy (45 min)",                "130 zł"],
+  ["Masaż leczniczy (60 min)",                "160 zł"],
+  ["Rehabilitacja po urazach (60 min)",       "170 zł"],
+  ["Fizykoterapia — pojedynczy zabieg",        "80 zł"],
+  ["Fizykoterapia — pakiet 5 zabiegów",       "350 zł"],
+  ["Pakiet rehabilitacyjny (10 wizyt)",      "1 500 zł"],
+  ["Wizyta kontrolna (30 min)",               "100 zł"],
 ];
 
 const godziny = [
-  { dzien: "Poniedziałek – Piątek", godz: "8:00 – 20:00" },
-  { dzien: "Sobota", godz: "9:00 – 15:00" },
-  { dzien: "Niedziela", godz: "Zamknięte" },
-];
-
-const stats = [
-  { value: 2400, suffix: "+", label: "Zadowolonych pacjentów" },
-  { value: 15, suffix: " lat", label: "Na rynku" },
-  { value: 4, suffix: "", label: "Specjalistów" },
-  { value: 98, suffix: "%", label: "Skuteczność terapii" },
+  { dzien: "Pon – Pt", godz: "8:00 – 20:00", open: true  },
+  { dzien: "Sobota",    godz: "9:00 – 15:00", open: true  },
+  { dzien: "Niedziela", godz: "Zamknięte",     open: false },
 ];
 
 const opinie = [
-  {
-    imie: "Marta K.",
-    ocena: 5,
-    tekst: "Po kontuzji kolana myślałam, że nie wrócę do biegania. Po 8 sesjach z Katarzyną znowu startuję w zawodach. Polecam z całego serca!",
-    usluga: "Rehabilitacja po urazach",
-  },
-  {
-    imie: "Janusz W.",
-    ocena: 5,
-    tekst: "Ból kręgosłupa towarzyszył mi przez 3 lata. Pan Tomasz w 5 wizyt zrobił to, czego nie osiągnął nikt wcześniej. Profesjonalizm na najwyższym poziomie.",
-    usluga: "Terapia manualna",
-  },
-  {
-    imie: "Zuzanna P.",
-    ocena: 5,
-    tekst: "Gabinet jest cudowny — czysty, spokojny, a terapeuci naprawdę słuchają. Masaż leczniczy u Anny to absolutny must-have po długim tygodniu pracy.",
-    usluga: "Masaż leczniczy",
-  },
+  { imie: "Marta K.",   ocena: 5, tekst: "Po kontuzji kolana myślałam, że nie wrócę do biegania. Po 8 sesjach z Katarzyną znowu startuję w zawodach!", usluga: "Rehabilitacja po urazach" },
+  { imie: "Janusz W.",  ocena: 5, tekst: "Ból kręgosłupa towarzyszył mi przez 3 lata. Pan Tomasz w 5 wizyt zrobił to, czego nie osiągnął nikt wcześniej.",  usluga: "Terapia manualna"        },
+  { imie: "Zuzanna P.", ocena: 5, tekst: "Gabinet cudowny — terapeuci naprawdę słuchają. Masaż leczniczy u Anny to absolutny must-have po ciężkim tygodniu.", usluga: "Masaż leczniczy"         },
 ];
+
+const marquee = ["POWRÓT DO FORMY", "FIZJOTERAPIA", "TERAPIA MANUALNA", "MASAŻ LECZNICZY", "REHABILITACJA", "FIZYKOTERAPIA", "-50% RWY ✦"];
 ---
 
 <Layout>
-  <!-- ═══════════════════════════════════════════════
-       NAVIGATION — fixed, SPEC trap #2 handled
-  ══════════════════════════════════════════════════ -->
-  <nav
-    id="nav"
-    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-    style="font-family: var(--font-display);"
-  >
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="#" class="flex items-center gap-2.5 group">
-        <div class="w-9 h-9 rounded-xl bg-[#16a34a] flex items-center justify-center group-hover:bg-[#a3e635] transition-colors duration-300">
-          <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-white group-hover:text-[#14532d] transition-colors duration-300">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="currentColor"/>
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="currentColor" stroke-width="0" fill="none"/>
-          </svg>
-        </div>
-        <span class="text-xl font-bold text-white tracking-tight">
-          Re<span class="text-[#a3e635]">Vita</span>
-        </span>
-      </a>
 
-      <!-- Desktop links -->
-      <ul class="hidden md:flex items-center gap-8">
-        {nav_links.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              class="text-sm font-semibold text-white/80 hover:text-[#a3e635] transition-colors duration-200 relative group"
-            >
-              {link.label}
-              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a3e635] group-hover:w-full transition-all duration-300"></span>
-            </a>
-          </li>
+  <!-- ===== NAV ===== -->
+  <nav id="nav" class="fixed inset-x-0 z-40 border-b-4 border-[#0a0a0a] bg-[#f3f3ee]">
+    <div class="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-3 lg:px-8">
+      <a href="#top" class="disp inline-block bg-[#0a0a0a] px-4 py-2 text-2xl text-[#b6ff1a] nb-press" style="box-shadow:6px 6px 0 0 #b6ff1a;">RE<span class="text-[#ff6a00]">VITA</span></a>
+
+      <div class="hidden items-center gap-1 lg:flex">
+        {[["#o-nas","O nas"],["#uslugi","Usługi"],["#terapeuci","Terapeuci"],["#cennik","Cennik"]].map(([h,l]) => (
+          <a href={h} class="mono nb2 nb-press bg-[#f3f3ee] px-3 py-2 text-xs font-bold uppercase tracking-widest hover:bg-[#b6ff1a] transition-colors">{l}</a>
         ))}
-      </ul>
-
-      <!-- CTA + Burger -->
-      <div class="flex items-center gap-4">
-        <a
-          href="#rezerwacja"
-          class="hidden md:inline-flex items-center gap-2 bg-[#16a34a] hover:bg-[#a3e635] text-white hover:text-[#14532d] font-bold text-sm px-5 py-2.5 rounded-full transition-all duration-300 shadow-lg shadow-green-900/20"
-        >
-          Umów wizytę
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-          </svg>
-        </a>
-
-        <button
-          id="burger"
-          class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 text-white"
-          aria-label="Menu"
-        >
-          <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
-          <span class="w-6 h-0.5 bg-white transition-all duration-300"></span>
-          <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
-        </button>
+        <a href="#rezerwacja" class="disp nb nb-shadow bg-[#ff6a00] px-5 py-2 text-base text-white nb-press ml-2">UMÓW SIĘ →</a>
       </div>
-    </div>
 
-    <!-- Mobile menu -->
-    <div
-      id="mobile-menu"
-      class="hidden md:hidden border-t border-white/10"
-      style="background: rgba(20, 83, 45, 0.97); backdrop-filter: blur(12px);"
-    >
-      <ul class="flex flex-col px-6 py-4 gap-4">
-        {nav_links.map((link) => (
-          <li>
-            <a href={link.href} class="text-white/90 hover:text-[#a3e635] font-semibold text-base transition-colors duration-200 block py-1">
-              {link.label}
-            </a>
-          </li>
-        ))}
-        <li class="pt-2">
-          <a href="#rezerwacja" class="block text-center bg-[#16a34a] text-white font-bold py-3 rounded-full hover:bg-[#a3e635] hover:text-[#14532d] transition-all duration-300">
-            Umów wizytę
-          </a>
-        </li>
-      </ul>
+      <button id="burger" class="nb2 bg-[#b6ff1a] px-3 py-2 lg:hidden" aria-label="Menu">
+        <span class="mono text-xs font-bold uppercase">MENU</span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden border-t-4 border-[#0a0a0a] bg-[#f3f3ee] px-4 py-4 lg:hidden">
+      <div class="mono flex flex-col gap-2 text-sm font-bold uppercase">
+        <a href="#o-nas"      class="nb2 px-3 py-2 hover:bg-[#b6ff1a]">O nas</a>
+        <a href="#uslugi"     class="nb2 px-3 py-2 hover:bg-[#b6ff1a]">Usługi</a>
+        <a href="#terapeuci"  class="nb2 px-3 py-2 hover:bg-[#b6ff1a]">Terapeuci</a>
+        <a href="#cennik"     class="nb2 px-3 py-2 hover:bg-[#b6ff1a]">Cennik</a>
+        <a href="#rezerwacja" class="nb nb-shadow bg-[#ff6a00] px-4 py-3 text-center text-white">Umów wizytę →</a>
+      </div>
     </div>
   </nav>
 
-  <!-- SPEC trap #2: scrolled nav style -->
   <style>
-    #nav.scrolled {
-      background: color-mix(in srgb, #14532d 92%, transparent);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(163, 230, 53, 0.2);
-      box-shadow: 0 4px 32px rgba(20, 33, 26, 0.3);
-    }
-    #nav:not(.scrolled) {
-      background: linear-gradient(to bottom, rgba(20, 33, 26, 0.7), transparent);
-    }
-    #burger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-    #burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    #burger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    #nav.scrolled { background: rgba(243,243,238,0.96); backdrop-filter: blur(8px); }
   </style>
 
-  <!-- ═══════════════════════════════════════════════
-       HERO — SPEC trap #1 handled
-  ══════════════════════════════════════════════════ -->
-  <header class="relative min-h-screen flex items-center bg-[#14211a] overflow-hidden">
-    <!-- Background image container — z-0, NOT z-10 (SPEC trap #1) -->
-    <div class="absolute inset-0 z-0" id="hero-bg">
-      <img
-        src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1200&q=80"
-        alt="Gabinet fizjoterapii"
-        class="w-full h-full object-cover"
-        loading="eager"
-      />
-      <!-- Gradient overlay for contrast -->
-      <div class="absolute inset-0 bg-gradient-to-r from-[#14211a]/95 via-[#14211a]/70 to-[#14211a]/30"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-[#14211a]/80 via-transparent to-[#14211a]/40"></div>
+  <!-- ===== HERO ===== -->
+  <header id="top" class="relative overflow-hidden bg-[#0a0a0a] pt-28 pb-0 lg:pt-32">
+    <!-- background image -->
+    <div class="absolute inset-0 z-0">
+      <img src={img.hero} alt="Fizjoterapia ReVita" class="w-full h-full object-cover opacity-20" />
+      <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/60 via-[#0a0a0a]/30 to-[#0a0a0a]"></div>
     </div>
 
-    <!-- Decorative animated elements -->
-    <div class="absolute top-1/4 right-[10%] w-72 h-72 rounded-full opacity-10 bg-[#16a34a] blur-3xl animate-float z-0"></div>
-    <div class="absolute bottom-1/4 right-[20%] w-48 h-48 rounded-full opacity-8 bg-[#a3e635] blur-2xl animate-float z-0" style="animation-delay: 2s;"></div>
+    <!-- dot grid pattern -->
+    <div class="absolute inset-0 z-0 pointer-events-none" style="background-image:radial-gradient(rgba(182,255,26,.15) 1px,transparent 1px);background-size:32px 32px;"></div>
 
-    <!-- Diagonal stripe accent -->
-    <div class="absolute inset-0 z-0 stripe-bg opacity-30 pointer-events-none"></div>
+    <div class="relative z-10 mx-auto max-w-[1440px] px-4 lg:px-8">
+      <!-- Top stickers row -->
+      <div class="flex flex-wrap items-start gap-3 mb-8">
+        <span class="mono nb2 nb-shadow-lime inline-block bg-[#b6ff1a] text-[#0a0a0a] px-3 py-1 text-xs font-bold uppercase rot-2 tracking-widest">★ Warszawa · Mokotów</span>
+        <span class="mono nb2 nb-shadow-org inline-block bg-[#ff6a00] text-white px-3 py-1 text-xs font-bold uppercase rot-1 tracking-widest">↑ Od 2009</span>
+        <span class="mono nb2 inline-block bg-white text-[#0a0a0a] px-3 py-1 text-xs font-bold uppercase rot-3 tracking-widest" style="box-shadow:8px 8px 0 0 #15803d;">4.9★ / 2400+ pacjentów</span>
+      </div>
 
-    <!-- Vertical line + dot decoration -->
-    <div class="absolute left-10 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-3 z-10">
-      <div class="w-px h-24 bg-gradient-to-b from-transparent to-[#16a34a]"></div>
-      <div class="w-2.5 h-2.5 rounded-full bg-[#a3e635]" style="animation: pulse-dot 2s ease infinite;"></div>
-      <div class="w-px h-24 bg-gradient-to-b from-[#16a34a] to-transparent"></div>
-    </div>
-
-    <!-- Hero content — relative z-10 (SPEC trap #1) -->
-    <div class="relative z-10 max-w-7xl mx-auto px-6 py-32 grid lg:grid-cols-2 items-center gap-12">
-      <div>
-        <!-- Badge -->
-        <div class="inline-flex items-center gap-2 bg-[#16a34a]/20 border border-[#16a34a]/40 rounded-full px-4 py-1.5 mb-6">
-          <div class="w-2 h-2 rounded-full bg-[#a3e635]" style="animation: pulse-dot 1.5s ease infinite;"></div>
-          <span class="text-[#a3e635] text-xs font-bold tracking-widest uppercase" style="font-family: var(--font-display);">Warszawa · Mokotów</span>
+      <!-- Giant heading — asymmetric layout -->
+      <div class="grid items-end gap-0 lg:grid-cols-[1fr_auto]">
+        <div>
+          <h1 class="disp text-[#f3f3ee]" style="font-size:clamp(5rem,13vw,12rem);line-height:.85;">
+            <span class="block">WRÓĆ</span>
+            <span class="block text-[#b6ff1a]">DO FORMY.</span>
+            <span class="block stroke-lime" style="-webkit-text-stroke:3px #b6ff1a;">SZYBKO.</span>
+          </h1>
+          <p class="mt-6 max-w-xl text-[#f3f3ee]/70 text-lg leading-relaxed" style="font-family:var(--font-body);">
+            ReVita to gabinet fizjoterapii i rehabilitacji, gdzie nowoczesne metody terapii spotykają się z indywidualnym podejściem. Twój ruch — nasza misja.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="#rezerwacja" class="disp nb nb-shadow-lime bg-[#b6ff1a] px-8 py-4 text-xl text-[#0a0a0a] nb-press">UMÓW WIZYTĘ →</a>
+            <a href="#uslugi"     class="disp nb2 nb-shadow bg-transparent border-[#f3f3ee] text-[#f3f3ee] px-8 py-4 text-xl nb-press hover:bg-[#f3f3ee] hover:text-[#0a0a0a] transition-colors">USŁUGI</a>
+          </div>
         </div>
 
-        <!-- Headline -->
-        <h1
-          class="text-5xl md:text-6xl xl:text-7xl font-extrabold leading-[1.05] text-white mb-6"
-          style="font-family: var(--font-display);"
-        >
-          Wróć do<br/>
-          pełnej<br/>
-          <span class="text-shimmer">sprawności.</span>
-        </h1>
-
-        <p class="text-white/70 text-lg md:text-xl leading-relaxed mb-8 max-w-lg" style="font-family: var(--font-body);">
-          ReVita to gabinet fizjoterapii i rehabilitacji, gdzie nowoczesne metody terapii spotykają się z indywidualnym podejściem. Twój ruch — nasza misja.
-        </p>
-
-        <!-- CTA buttons -->
-        <div class="flex flex-col sm:flex-row items-start gap-4">
-          <a
-            href="#rezerwacja"
-            class="btn-primary inline-flex items-center gap-3 bg-[#16a34a] hover:bg-[#a3e635] text-white hover:text-[#14532d] font-bold text-base px-8 py-4 rounded-full transition-all duration-300 shadow-xl shadow-green-900/30"
-            style="font-family: var(--font-display);"
-          >
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-            </svg>
-            Umów wizytę
-          </a>
-          <a
-            href="#uslugi"
-            class="inline-flex items-center gap-2 text-white/80 hover:text-[#a3e635] font-semibold text-base transition-colors duration-200 group"
-            style="font-family: var(--font-display);"
-          >
-            Nasze usługi
-            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
-          </a>
-        </div>
-
-        <!-- Quick stats -->
-        <div class="flex flex-wrap gap-6 mt-10 pt-8 border-t border-white/10">
-          {stats.map((s) => (
-            <div class="text-center">
-              <div
-                class="text-3xl font-extrabold text-[#a3e635]"
-                style="font-family: var(--font-display);"
-                data-count={s.value}
-                data-suffix={s.suffix}
-              >
-                0{s.suffix}
-              </div>
-              <div class="text-white/50 text-xs mt-0.5 font-medium">{s.label}</div>
+        <!-- Right side: vertical stats block -->
+        <div class="hidden lg:flex flex-col gap-0 self-end pb-0">
+          {[["2400+","pacjentów"],["15 lat","doświadczenia"],["98%","skuteczność"]].map(([v,l]) => (
+            <div class="nb4 border-b-0 last:border-b-4 bg-[#b6ff1a] px-8 py-5 text-[#0a0a0a] min-w-[220px]">
+              <div class="disp text-4xl">{v}</div>
+              <div class="mono text-xs font-bold uppercase tracking-widest mt-1">{l}</div>
             </div>
           ))}
         </div>
       </div>
-
-      <!-- Right side visual block -->
-      <div class="hidden lg:flex justify-end relative">
-        <div class="relative w-[420px] h-[520px]">
-          <!-- Main card image -->
-          <div class="absolute inset-0 rounded-3xl overflow-hidden green-glow">
-            <img
-              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80"
-              alt="Fizjoterapia"
-              class="w-full h-full object-cover"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-[#14532d]/60 to-transparent"></div>
-          </div>
-
-          <!-- Floating badge -->
-          <div class="absolute -top-5 -left-8 bg-white rounded-2xl shadow-2xl p-4 flex items-center gap-3 animate-float">
-            <div class="w-12 h-12 bg-[#f3faf4] rounded-xl flex items-center justify-center">
-              <svg class="w-6 h-6 text-[#16a34a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </div>
-            <div>
-              <div class="font-bold text-sm text-[#14211a]" style="font-family: var(--font-display);">Certyfikowani</div>
-              <div class="text-xs text-[#14211a]/60">Terapeuci z pasją</div>
-            </div>
-          </div>
-
-          <!-- Bottom floating tag -->
-          <div class="absolute -bottom-4 -right-4 bg-[#a3e635] rounded-2xl shadow-xl p-4 animate-float" style="animation-delay: 1.5s;">
-            <div class="text-[#14532d] font-extrabold text-lg leading-none" style="font-family: var(--font-display);">98%</div>
-            <div class="text-[#14532d]/80 text-xs font-medium mt-0.5">Skuteczność</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-      <span class="text-white/40 text-xs tracking-widest uppercase font-medium" style="font-family: var(--font-display);">Przewiń</span>
-      <div class="w-5 h-8 border-2 border-white/30 rounded-full flex justify-center pt-1.5">
-        <div class="w-1 h-2 bg-[#a3e635] rounded-full" style="animation: pulse-dot 1.5s ease infinite;"></div>
-      </div>
     </div>
   </header>
 
-  <!-- ═══════════════════════════════════════════════
-       O NAS
-  ══════════════════════════════════════════════════ -->
-  <section id="o-nas" class="py-24 md:py-32 bg-white relative overflow-hidden">
-    <!-- Background decoration -->
-    <div class="absolute top-0 right-0 w-1/2 h-full bg-[#f3faf4] clip-path-diagonal pointer-events-none"></div>
-    <div class="absolute top-20 right-10 w-64 h-64 rounded-full bg-[#dcfce7] opacity-60 blur-3xl pointer-events-none"></div>
+  <!-- ===== MARQUEE ===== -->
+  <section class="border-y-4 border-[#0a0a0a] bg-[#ff6a00] py-3 overflow-hidden">
+    <div class="flex whitespace-nowrap">
+      <div class="marquee-track flex shrink-0">
+        {[...marquee, ...marquee].map((w) => (
+          <span class="disp mx-6 text-2xl text-white">{w} <span class="text-[#b6ff1a]">◆</span></span>
+        ))}
+      </div>
+    </div>
+  </section>
 
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-        <!-- Left: image mosaic -->
-        <div class="reveal-left relative">
-          <div class="grid grid-cols-2 gap-4">
-            <div class="rounded-2xl overflow-hidden aspect-[3/4] bg-[#dcfce7]">
-              <img
-                src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=600&q=80"
-                alt="Gabinet ReVita"
-                class="w-full h-full object-cover"
-              />
-            </div>
-            <div class="flex flex-col gap-4">
-              <div class="rounded-2xl overflow-hidden flex-1 bg-[#dcfce7]">
-                <img
-                  src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=600&q=80"
-                  alt="Terapia manualna"
-                  class="w-full h-full object-cover"
-                />
-              </div>
-              <div class="bg-[#16a34a] rounded-2xl p-6 text-white">
-                <div class="text-4xl font-extrabold mb-1" style="font-family: var(--font-display);">15+</div>
-                <div class="text-sm font-medium text-white/80">Lat doświadczenia w rehabilitacji</div>
-              </div>
-            </div>
+  <!-- ===== O NAS ===== -->
+  <section id="o-nas" class="bg-[#f3f3ee] px-4 py-16 lg:px-8 lg:py-24">
+    <div class="mx-auto max-w-[1440px]">
+      <!-- label -->
+      <div class="mb-6">
+        <span class="mono nb2 nb-shadow-lime inline-block bg-[#b6ff1a] px-3 py-1 text-xs font-bold uppercase tracking-widest rot-2">// O nas</span>
+      </div>
+
+      <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr] items-start">
+        <!-- Left: photo stack -->
+        <div class="reveal-l relative">
+          <!-- Big frame -->
+          <div class="nb nb-shadow-lg overflow-hidden bg-[#0a0a0a] rot-2">
+            <img src={img.onas1} alt="Gabinet ReVita" class="aspect-[4/5] w-full object-cover grayscale contrast-110" />
           </div>
-
-          <!-- Accent shape -->
-          <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-[#a3e635] rounded-2xl -z-10 rotate-12"></div>
-          <div class="absolute -top-6 -right-6 w-16 h-16 bg-[#16a34a] rounded-xl -z-10 -rotate-6 opacity-30"></div>
+          <!-- Overlapping sticker: 15+ lat -->
+          <div class="disp absolute -bottom-6 -right-4 nb nb-shadow bg-[#ff6a00] px-6 py-4 text-white rot-1" style="box-shadow:8px 8px 0 0 #0a0a0a;">
+            <span class="block text-5xl leading-none">15+</span>
+            <span class="mono block text-xs font-bold uppercase mt-1">Lat doświadczenia</span>
+          </div>
+          <!-- Small floating photo -->
+          <div class="absolute -top-5 -left-6 nb nb-shadow-lime overflow-hidden w-36 h-44 rot-1 hidden lg:block">
+            <img src={img.onas2} alt="Terapia" class="w-full h-full object-cover" />
+          </div>
         </div>
 
-        <!-- Right: content -->
-        <div class="reveal-right">
-          <div class="inline-flex items-center gap-2 bg-[#dcfce7] rounded-full px-4 py-1.5 mb-6">
-            <div class="w-1.5 h-1.5 rounded-full bg-[#16a34a]"></div>
-            <span class="text-[#14532d] text-xs font-bold tracking-widest uppercase" style="font-family: var(--font-display);">O nas</span>
-          </div>
-
-          <h2 class="text-4xl md:text-5xl font-extrabold text-[#14211a] leading-tight mb-6" style="font-family: var(--font-display);">
-            Twoje zdrowie<br/>
-            <span class="text-[#16a34a]">jest naszą</span><br/>
-            specjalnością
+        <!-- Right: text -->
+        <div class="reveal-r">
+          <h2 class="disp text-[#0a0a0a]" style="font-size:clamp(3.5rem,7vw,7rem);line-height:.88;">
+            TWOJE<br />
+            ZDROWIE<br />
+            <span class="text-[#15803d]">NASZA</span><br />
+            <span class="stroke-ink">MISJA.</span>
           </h2>
-
-          <p class="text-[#14211a]/70 text-lg leading-relaxed mb-6">
+          <p class="mt-6 text-[#0a0a0a]/75 text-base leading-relaxed max-w-lg">
             ReVita powstała z pasji do ruchu i przekonania, że każdy człowiek zasługuje na życie bez bólu i ograniczeń. Od 2009 roku pomagamy pacjentom w Warszawie odzyskać sprawność i powrócić do aktywnego życia.
           </p>
-          <p class="text-[#14211a]/70 leading-relaxed mb-8">
-            Nasz gabinet przy ul. Puławskiej łączy najnowsze metody fizjoterapeutyczne z indywidualnym podejściem do każdego pacjenta. Wierzymy, że skuteczna rehabilitacja to nie tylko leczenie objawów, ale zrozumienie źródła problemu.
+          <p class="mt-4 text-[#0a0a0a]/60 text-sm leading-relaxed max-w-lg">
+            Nasz gabinet przy ul. Puławskiej łączy najnowsze metody fizjoterapeutyczne z indywidualnym podejściem do każdego pacjenta. Skuteczna rehabilitacja to zrozumienie źródła problemu — nie tylko leczenie objawów.
           </p>
 
-          <div class="grid grid-cols-2 gap-4 mb-8">
-            {[
-              "Diagnoza funkcjonalna",
-              "Indywidualny plan terapii",
-              "Sprzęt najnowszej generacji",
-              "Podejście holistyczne",
-            ].map((item) => (
-              <div class="flex items-center gap-2.5">
-                <div class="w-5 h-5 rounded-full bg-[#dcfce7] flex items-center justify-center flex-shrink-0">
-                  <svg class="w-3 h-3 text-[#16a34a]" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                  </svg>
-                </div>
-                <span class="text-sm font-medium text-[#14211a]/80">{item}</span>
-              </div>
+          <!-- Feature tags -->
+          <div class="mt-8 flex flex-wrap gap-3">
+            {["Diagnoza funkcjonalna","Indywidualny plan terapii","Sprzęt najnowszej generacji","Podejście holistyczne"].map((f) => (
+              <span class="mono nb2 bg-[#muted] px-3 py-1 text-xs font-bold uppercase tracking-wide bg-[#e8e8e3]">{f}</span>
             ))}
           </div>
 
-          <a
-            href="#rezerwacja"
-            class="inline-flex items-center gap-2 bg-[#14532d] hover:bg-[#16a34a] text-white font-bold px-8 py-4 rounded-full transition-all duration-300"
-            style="font-family: var(--font-display);"
-          >
-            Poznaj nas lepiej
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
-          </a>
+          <a href="#rezerwacja" class="disp mt-8 inline-block nb nb-shadow bg-[#0a0a0a] text-[#b6ff1a] px-7 py-3 text-lg nb-press">POZNAJ NAS →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       USŁUGI
-  ══════════════════════════════════════════════════ -->
-  <section id="uslugi" class="py-24 md:py-32 bg-[#f3faf4] relative overflow-hidden">
-    <div class="absolute inset-0 stripe-bg opacity-40 pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="text-center mb-16 reveal">
-        <div class="inline-flex items-center gap-2 bg-white rounded-full px-4 py-1.5 mb-6 shadow-sm">
-          <div class="w-1.5 h-1.5 rounded-full bg-[#16a34a]"></div>
-          <span class="text-[#14532d] text-xs font-bold tracking-widest uppercase" style="font-family: var(--font-display);">Nasze usługi</span>
-        </div>
-        <h2 class="text-4xl md:text-5xl font-extrabold text-[#14211a] leading-tight" style="font-family: var(--font-display);">
-          Kompleksowa opieka<br/>
-          <span class="text-[#16a34a]">na każdym etapie</span>
+  <!-- ===== USŁUGI ===== -->
+  <section id="uslugi" class="border-t-4 border-[#0a0a0a] bg-[#0a0a0a] px-4 py-16 lg:px-8 lg:py-24">
+    <div class="mx-auto max-w-[1440px]">
+      <!-- header row -->
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 gap-4">
+        <h2 class="disp text-[#f3f3ee]" style="font-size:clamp(3rem,8vw,8rem);line-height:.85;">
+          NASZE<br /><span class="text-[#b6ff1a]">USŁUGI.</span>
         </h2>
-        <p class="text-[#14211a]/60 text-lg mt-4 max-w-2xl mx-auto">
-          Od ostrego urazu po przewlekły ból — dobieramy metody terapii dostosowane do Twojego stanu i celów.
+        <p class="mono text-[#f3f3ee]/50 text-sm max-w-xs font-bold uppercase tracking-wide">
+          Od ostrego urazu po przewlekły ból — dobieramy metody dostosowane do Twoich celów.
         </p>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {uslugi.map((s, i) => (
-          <div
-            class={`reveal reveal-delay-${(i % 4) + 1} card-hover bg-white rounded-3xl p-8 relative group cursor-default ${i === 0 ? "lg:col-span-1" : ""}`}
-          >
-            {s.tag && (
-              <div class="absolute top-4 right-4 bg-[#a3e635] text-[#14532d] text-xs font-bold px-3 py-1 rounded-full" style="font-family: var(--font-display);">
-                {s.tag}
+      <!-- Services grid — intentional asymmetry -->
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {uslugi.map((u, i) => (
+          <div class={`reveal nb nb-shadow nb-press ${u.bg} p-7 relative ${i === 1 ? "rot-1 sm:mt-6" : i === 3 ? "rot-2" : ""} ${u.bg === "bg-[#15803d]" ? "text-white" : "text-[#0a0a0a]"}`}>
+            {u.tag && (
+              <div class="mono absolute -top-3 -right-2 nb2 bg-[#ff6a00] text-white px-3 py-1 text-xs font-bold uppercase rot-4" style="box-shadow:4px 4px 0 0 #0a0a0a;">
+                {u.tag}
               </div>
             )}
-            <!-- Icon wrapper -->
-            <div class="w-16 h-16 bg-[#dcfce7] group-hover:bg-[#16a34a] rounded-2xl flex items-center justify-center mb-6 transition-colors duration-300">
-              <div class="text-[#16a34a] group-hover:text-white transition-colors duration-300" set:html={s.icon} />
+            <div class="flex items-start justify-between mb-4">
+              <span class="disp text-5xl opacity-30">{u.nr}</span>
+              <span class="mono nb2 bg-[#0a0a0a] text-[#b6ff1a] px-3 py-1 text-sm font-bold">{u.price}</span>
             </div>
-
-            <h3 class="text-xl font-bold text-[#14211a] mb-3" style="font-family: var(--font-display);">{s.name}</h3>
-            <p class="text-[#14211a]/60 text-sm leading-relaxed mb-6">{s.desc}</p>
-
-            <div class="flex items-center justify-between pt-4 border-t border-[#f3faf4]">
-              <span class="text-[#16a34a] font-bold text-lg" style="font-family: var(--font-display);">{s.price}</span>
-              <a
-                href="#rezerwacja"
-                class="text-xs font-bold text-[#14532d] hover:text-[#16a34a] flex items-center gap-1 transition-colors duration-200"
-                style="font-family: var(--font-display);"
-              >
-                Umów
-                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                </svg>
-              </a>
-            </div>
+            <h3 class="disp text-3xl mb-3">{u.name}</h3>
+            <p class="text-sm leading-relaxed opacity-80 max-w-xs">{u.desc}</p>
+            <a href="#rezerwacja" class={`mono mt-5 inline-block nb2 px-4 py-2 text-xs font-bold uppercase tracking-wide hover:bg-[#b6ff1a] hover:text-[#0a0a0a] hover:border-[#0a0a0a] transition-colors ${u.bg === "bg-[#15803d]" ? "border-white text-white" : "border-[#0a0a0a]"}`}>Umów →</a>
           </div>
         ))}
 
         <!-- CTA card -->
-        <div class="reveal reveal-delay-3 bg-[#14532d] rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden md:col-span-2 lg:col-span-1">
-          <div class="absolute top-0 right-0 w-48 h-48 bg-[#16a34a]/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="reveal nb nb-shadow-lime bg-[#b6ff1a] p-7 flex flex-col justify-between rot-1">
           <div>
-            <div class="w-14 h-14 bg-[#a3e635] rounded-2xl flex items-center justify-center mb-6">
-              <svg class="w-7 h-7 text-[#14532d]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-white mb-3" style="font-family: var(--font-display);">Nie wiesz co wybrać?</h3>
-            <p class="text-white/60 text-sm leading-relaxed mb-8">Umów bezpłatną konsultację wstępną — pomożemy dobrać odpowiednią terapię do Twoich potrzeb.</p>
+            <span class="disp text-5xl block text-[#0a0a0a]/20">?</span>
+            <h3 class="disp text-3xl mt-2 text-[#0a0a0a]">NIE WIESZ<br />CO WYBRAĆ?</h3>
+            <p class="mt-3 text-sm text-[#0a0a0a]/70 leading-relaxed max-w-xs">
+              Umów bezpłatną konsultację wstępną — pomożemy dobrać odpowiednią terapię do Twoich potrzeb.
+            </p>
           </div>
-          <a
-            href="#rezerwacja"
-            class="inline-flex items-center justify-center gap-2 bg-[#a3e635] hover:bg-white text-[#14532d] font-bold py-3 px-6 rounded-full transition-all duration-300"
-            style="font-family: var(--font-display);"
-          >
-            Bezpłatna konsultacja
-          </a>
+          <a href="#rezerwacja" class="disp mt-6 inline-block nb nb-shadow bg-[#0a0a0a] text-[#b6ff1a] px-6 py-3 text-base nb-press">BEZPŁATNA KONSULTACJA →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       TERAPEUCI
-  ══════════════════════════════════════════════════ -->
-  <section id="terapeuci" class="py-24 md:py-32 bg-white relative overflow-hidden">
-    <div class="absolute -top-px left-0 right-0 h-24 bg-[#f3faf4] clip-path-wave pointer-events-none"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#f3faf4]/50 rounded-full blur-3xl pointer-events-none"></div>
+  <!-- ===== MARQUEE 2 — lime ===== -->
+  <section class="border-y-4 border-[#0a0a0a] bg-[#b6ff1a] py-3 overflow-hidden">
+    <div class="flex whitespace-nowrap">
+      <div class="marquee-track flex shrink-0" style="animation-direction:reverse;">
+        {["EFEKTYWNA TERAPIA","CERTYFIKOWANI TERAPEUCI","SPRZĘT NAJWYŻSZEJ KLASY","INDYWIDUALNY PLAN","WARSZAWA MOKOTÓW","REZERWUJ ONLINE"].map((w) => (
+          <span class="disp mx-6 text-xl text-[#0a0a0a]">{w} <span class="text-[#15803d]">✦</span></span>
+        ))}
+        {["EFEKTYWNA TERAPIA","CERTYFIKOWANI TERAPEUCI","SPRZĘT NAJWYŻSZEJ KLASY","INDYWIDUALNY PLAN","WARSZAWA MOKOTÓW","REZERWUJ ONLINE"].map((w) => (
+          <span class="disp mx-6 text-xl text-[#0a0a0a]">{w} <span class="text-[#15803d]">✦</span></span>
+        ))}
+      </div>
+    </div>
+  </section>
 
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="text-center mb-16 reveal">
-        <div class="inline-flex items-center gap-2 bg-[#dcfce7] rounded-full px-4 py-1.5 mb-6">
-          <div class="w-1.5 h-1.5 rounded-full bg-[#16a34a]"></div>
-          <span class="text-[#14532d] text-xs font-bold tracking-widest uppercase" style="font-family: var(--font-display);">Nasz zespół</span>
-        </div>
-        <h2 class="text-4xl md:text-5xl font-extrabold text-[#14211a] leading-tight" style="font-family: var(--font-display);">
-          Poznaj naszych<br/>
-          <span class="text-[#16a34a]">terapeutów</span>
+  <!-- ===== TERAPEUCI ===== -->
+  <section id="terapeuci" class="bg-[#f3f3ee] px-4 py-16 lg:px-8 lg:py-24">
+    <div class="mx-auto max-w-[1440px]">
+      <div class="mb-10">
+        <span class="mono nb2 nb-shadow-org inline-block bg-[#ff6a00] text-white px-3 py-1 text-xs font-bold uppercase tracking-widest rot-1">// Nasz zespół</span>
+        <h2 class="disp mt-4 text-[#0a0a0a]" style="font-size:clamp(3rem,7vw,7rem);line-height:.88;">
+          POZNAJ<br /><span class="text-[#15803d]">TERAPEUTÓW.</span>
         </h2>
-        <p class="text-[#14211a]/60 text-lg mt-4 max-w-xl mx-auto">
-          Doświadczeni specjaliści z pasją do fizjoterapii. Każdy z certyfikatami w swojej dziedzinie.
-        </p>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {terapeuci.map((t, i) => (
-          <div class={`reveal reveal-delay-${i + 1} card-hover group`}>
-            <div class="bg-[#f3faf4] rounded-3xl overflow-hidden relative">
-              <!-- Photo -->
-              <div class="aspect-[3/4] bg-[#dcfce7] overflow-hidden relative">
-                <img
-                  src={`https://images.unsplash.com/${t.foto}?auto=format&fit=crop&w=400&q=80`}
-                  alt={t.imie}
-                  class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-[#14211a]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <p class="text-white/90 text-xs leading-relaxed">{t.opis}</p>
-                </div>
-              </div>
-
-              <!-- Info -->
-              <div class="p-5">
-                <div class="text-[#16a34a] text-xs font-bold uppercase tracking-wider mb-1" style="font-family: var(--font-display);">{t.spec}</div>
-                <h3 class="font-bold text-[#14211a] text-sm leading-tight mb-2" style="font-family: var(--font-display);">{t.imie}</h3>
-                <div class="flex items-center gap-1.5 text-xs text-[#14211a]/50">
-                  <svg class="w-3.5 h-3.5 text-[#16a34a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
-                  {t.doswiadczenie}
-                </div>
-              </div>
+          <figure class={`reveal nb nb-shadow overflow-hidden bg-[#0a0a0a] ${t.rot} group`}>
+            <div class="overflow-hidden">
+              <img
+                src={t.img} alt={t.imie} loading="lazy"
+                class="aspect-[3/4] w-full object-cover object-top grayscale contrast-110 transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
+              />
             </div>
-          </div>
+            <figcaption class={`border-t-3 border-[#0a0a0a] px-4 py-4 ${i % 2 === 0 ? "bg-[#b6ff1a] text-[#0a0a0a]" : "bg-[#ff6a00] text-white"}`}>
+              <p class="disp text-xl leading-tight">{t.imie}</p>
+              <p class="mono mt-1 text-xs font-bold uppercase tracking-wide opacity-80">{t.spec}</p>
+              <p class="mono mt-1 text-xs font-bold opacity-60">{t.doswiadczenie} doświadczenia</p>
+            </figcaption>
+          </figure>
         ))}
       </div>
 
       <!-- Opinions strip -->
-      <div class="mt-20 grid md:grid-cols-3 gap-6">
+      <div class="mt-20 grid gap-6 md:grid-cols-3">
         {opinie.map((o, i) => (
-          <div class={`reveal reveal-delay-${i + 1} bg-[#f3faf4] rounded-2xl p-6 relative`}>
-            <div class="absolute top-4 right-4 text-[#dcfce7]">
-              <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-              </svg>
-            </div>
-            <div class="flex gap-1 mb-3">
+          <div class={`reveal nb nb-shadow bg-white p-7 relative ${i === 1 ? "rot-2 md:mt-8" : i === 2 ? "rot-1" : ""}`}>
+            <div class="flex gap-1 mb-4">
               {Array.from({length: o.ocena}).map(() => (
-                <svg class="w-4 h-4 text-[#a3e635]" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
+                <span class="text-[#b6ff1a] text-lg">★</span>
               ))}
             </div>
-            <p class="text-[#14211a]/70 text-sm leading-relaxed mb-4">"{o.tekst}"</p>
-            <div>
-              <div class="font-bold text-sm text-[#14211a]" style="font-family: var(--font-display);">{o.imie}</div>
-              <div class="text-xs text-[#16a34a] font-medium">{o.usluga}</div>
+            <p class="text-[#0a0a0a]/80 text-sm leading-relaxed mb-5">„{o.tekst}"</p>
+            <div class="border-t-2 border-[#0a0a0a] pt-4 flex items-center justify-between">
+              <span class="disp text-lg text-[#0a0a0a]">{o.imie}</span>
+              <span class="mono text-xs font-bold text-[#15803d] uppercase">{o.usluga}</span>
             </div>
           </div>
         ))}
@@ -625,237 +311,146 @@ const opinie = [
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       CENNIK
-  ══════════════════════════════════════════════════ -->
-  <section id="cennik" class="py-24 md:py-32 bg-[#14532d] relative overflow-hidden">
-    <!-- Decorative bg -->
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-black/20 to-transparent"></div>
-      <div class="absolute top-1/4 right-0 w-96 h-96 bg-[#16a34a]/20 rounded-full blur-3xl"></div>
-      <div class="absolute bottom-0 left-1/4 w-72 h-72 bg-[#a3e635]/10 rounded-full blur-3xl"></div>
-    </div>
-    <div class="absolute inset-0 stripe-bg opacity-20 pointer-events-none"></div>
-
-    <div class="max-w-5xl mx-auto px-6 relative z-10">
-      <div class="text-center mb-16 reveal">
-        <div class="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 mb-6">
-          <div class="w-1.5 h-1.5 rounded-full bg-[#a3e635]"></div>
-          <span class="text-[#a3e635] text-xs font-bold tracking-widest uppercase" style="font-family: var(--font-display);">Cennik</span>
+  <!-- ===== CENNIK ===== -->
+  <section id="cennik" class="border-t-4 border-[#0a0a0a] bg-[#15803d] px-4 py-16 lg:px-8 lg:py-24">
+    <div class="mx-auto max-w-[1440px]">
+      <div class="grid gap-12 lg:grid-cols-[1.2fr_1fr] items-start">
+        <!-- Left: header + info -->
+        <div>
+          <span class="mono nb2 inline-block bg-[#b6ff1a] text-[#0a0a0a] px-3 py-1 text-xs font-bold uppercase tracking-widest rot-2">// Cennik</span>
+          <h2 class="disp mt-4 text-white" style="font-size:clamp(3rem,7vw,7rem);line-height:.88;">
+            PRZEJRZYSTE<br />CENY<br /><span class="text-[#b6ff1a]">BEZ NIESPODZIANEK.</span>
+          </h2>
+          <p class="mono mt-6 text-white/70 text-sm font-bold uppercase tracking-wide max-w-xs">
+            Płatność gotówką i kartą. Możliwość wystawienia faktury VAT. Pakiety z rabatem do 15%.
+          </p>
+          <a href="#rezerwacja" class="disp mt-8 inline-block nb nb-shadow-lime bg-[#b6ff1a] text-[#0a0a0a] px-7 py-3 text-xl nb-press">ZAREZERWUJ WIZYTĘ →</a>
         </div>
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white leading-tight" style="font-family: var(--font-display);">
-          Przejrzyste ceny,<br/>
-          <span class="text-[#a3e635]">bez niespodzianek</span>
-        </h2>
-        <p class="text-white/60 text-lg mt-4">
-          Wszystkie zabiegi rozliczane indywidualnie. Pakiety z rabatem do 15%.
-        </p>
-      </div>
 
-      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl overflow-hidden reveal">
-        {cennik.map((item, i) => (
-          <div
-            class={`flex items-center justify-between px-8 py-5 hover:bg-white/5 transition-colors duration-200 group ${
-              i < cennik.length - 1 ? "border-b border-white/10" : ""
-            }`}
-          >
-            <div class="flex items-center gap-4">
-              <div class="w-8 h-8 rounded-lg bg-[#16a34a]/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-4 h-4 text-[#a3e635]" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                </svg>
-              </div>
-              <span class="text-white/80 group-hover:text-white transition-colors duration-200 font-medium">{item.usluga}</span>
-            </div>
-            <span class="text-[#a3e635] font-bold text-lg flex-shrink-0 ml-4" style="font-family: var(--font-display);">{item.cena}</span>
+        <!-- Right: price list as raw receipt -->
+        <div class="reveal nb nb-shadow-lg bg-[#f3f3ee] p-6 lg:p-8 rot-3">
+          <div class="flex items-center justify-between border-b-[3px] border-dashed border-[#0a0a0a] pb-4 mb-5">
+            <span class="disp text-2xl">CENNIK</span>
+            <span class="mono text-xs font-bold uppercase">// gotówka / karta</span>
           </div>
-        ))}
-      </div>
-
-      <p class="text-center text-white/40 text-sm mt-6">
-        Akceptujemy płatności gotówką i kartą. Możliwość wystawienia faktury VAT.
-      </p>
-
-      <div class="mt-12 text-center reveal">
-        <a
-          href="#rezerwacja"
-          class="inline-flex items-center gap-3 bg-[#a3e635] hover:bg-white text-[#14532d] font-bold text-base px-10 py-4 rounded-full transition-all duration-300 shadow-xl shadow-black/20"
-          style="font-family: var(--font-display);"
-        >
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-          </svg>
-          Zarezerwuj wizytę
-        </a>
+          <ul class="space-y-3">
+            {cennik.map(([n, p]) => (
+              <li class="mono flex items-end gap-2 text-sm font-bold">
+                <span class="uppercase leading-tight">{n}</span>
+                <span class="mb-0.5 flex-1 border-b-2 border-dotted border-[#0a0a0a] min-w-[16px]"></span>
+                <span class="bg-[#b6ff1a] px-2 py-0.5 shrink-0">{p}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="mono mt-6 text-center text-xs uppercase border-t-2 border-dashed border-[#0a0a0a] pt-4 text-[#0a0a0a]/60">— dziękujemy za zaufanie —</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       REZERWACJA + KONTAKT + MAPA
-  ══════════════════════════════════════════════════ -->
-  <section id="rezerwacja" class="py-24 md:py-32 bg-[#f3faf4] relative overflow-hidden">
-    <div class="absolute top-0 left-0 w-80 h-80 bg-[#dcfce7] rounded-full blur-3xl opacity-60 pointer-events-none"></div>
-    <div class="absolute bottom-0 right-0 w-64 h-64 bg-[#a3e635]/20 rounded-full blur-3xl pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="text-center mb-16 reveal">
-        <div class="inline-flex items-center gap-2 bg-white rounded-full px-4 py-1.5 mb-6 shadow-sm">
-          <div class="w-1.5 h-1.5 rounded-full bg-[#16a34a]"></div>
-          <span class="text-[#14532d] text-xs font-bold tracking-widest uppercase" style="font-family: var(--font-display);">Rezerwacja</span>
-        </div>
-        <h2 class="text-4xl md:text-5xl font-extrabold text-[#14211a] leading-tight" style="font-family: var(--font-display);">
-          Umów wizytę<br/>
-          <span class="text-[#16a34a]">już dziś</span>
+  <!-- ===== REZERWACJA + KONTAKT + MAPA ===== -->
+  <section id="rezerwacja" class="border-t-4 border-[#0a0a0a] bg-[#f3f3ee] px-4 py-16 lg:px-8 lg:py-24">
+    <div class="mx-auto max-w-[1440px]">
+      <!-- Section label -->
+      <div class="mb-8 flex flex-wrap items-end gap-6">
+        <h2 class="disp text-[#0a0a0a]" style="font-size:clamp(3rem,7vw,7rem);line-height:.88;">
+          UMÓW<br /><span class="text-[#ff6a00]">WIZYTĘ.</span>
         </h2>
+        <span class="mono nb2 nb-shadow-org inline-block bg-[#ff6a00] text-white px-4 py-2 text-xs font-bold uppercase tracking-widest rot-2 self-start mt-4">Odpiszemy do 24h</span>
       </div>
 
-      <div class="grid lg:grid-cols-5 gap-10">
-        <!-- Form — 3 cols -->
-        <div class="lg:col-span-3 reveal-left">
-          <div class="bg-white rounded-3xl p-8 shadow-sm">
-            <h3 class="text-xl font-bold text-[#14211a] mb-6" style="font-family: var(--font-display);">Formularz rezerwacji</h3>
-            <form class="space-y-5" id="contact-form">
-              <div class="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label class="block text-sm font-semibold text-[#14211a]/70 mb-2" style="font-family: var(--font-display);">Imię i nazwisko *</label>
-                  <input
-                    type="text"
-                    placeholder="Jan Kowalski"
-                    class="w-full px-4 py-3 rounded-xl border border-[#dcfce7] bg-[#f3faf4] text-[#14211a] placeholder-[#14211a]/30 focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/20 transition-all duration-200"
-                    required
-                  />
-                </div>
-                <div>
-                  <label class="block text-sm font-semibold text-[#14211a]/70 mb-2" style="font-family: var(--font-display);">Telefon *</label>
-                  <input
-                    type="tel"
-                    placeholder="+48 600 123 456"
-                    class="w-full px-4 py-3 rounded-xl border border-[#dcfce7] bg-[#f3faf4] text-[#14211a] placeholder-[#14211a]/30 focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/20 transition-all duration-200"
-                    required
-                  />
-                </div>
-              </div>
-              <div>
-                <label class="block text-sm font-semibold text-[#14211a]/70 mb-2" style="font-family: var(--font-display);">Adres e-mail *</label>
-                <input
-                  type="email"
-                  placeholder="jan@email.pl"
-                  class="w-full px-4 py-3 rounded-xl border border-[#dcfce7] bg-[#f3faf4] text-[#14211a] placeholder-[#14211a]/30 focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/20 transition-all duration-200"
-                  required
-                />
-              </div>
-              <div class="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label class="block text-sm font-semibold text-[#14211a]/70 mb-2" style="font-family: var(--font-display);">Rodzaj usługi</label>
-                  <select class="w-full px-4 py-3 rounded-xl border border-[#dcfce7] bg-[#f3faf4] text-[#14211a] focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/20 transition-all duration-200">
-                    <option value="">Wybierz usługę</option>
-                    <option>Fizjoterapia</option>
-                    <option>Terapia manualna</option>
-                    <option>Masaż leczniczy</option>
-                    <option>Rehabilitacja po urazach</option>
-                    <option>Fizykoterapia</option>
-                    <option>Bezpłatna konsultacja</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-sm font-semibold text-[#14211a]/70 mb-2" style="font-family: var(--font-display);">Preferowany termin</label>
-                  <input
-                    type="date"
-                    class="w-full px-4 py-3 rounded-xl border border-[#dcfce7] bg-[#f3faf4] text-[#14211a] focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/20 transition-all duration-200"
-                  />
-                </div>
-              </div>
-              <div>
-                <label class="block text-sm font-semibold text-[#14211a]/70 mb-2" style="font-family: var(--font-display);">Opisz swój problem (opcjonalnie)</label>
-                <textarea
-                  rows="4"
-                  placeholder="Opisz dolegliwości, które Cię niepokoją lub cel wizyty..."
-                  class="w-full px-4 py-3 rounded-xl border border-[#dcfce7] bg-[#f3faf4] text-[#14211a] placeholder-[#14211a]/30 focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/20 transition-all duration-200 resize-none"
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                class="w-full bg-[#16a34a] hover:bg-[#14532d] text-white font-bold py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-base shadow-lg shadow-green-900/20"
-                style="font-family: var(--font-display);"
-              >
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                Wyślij rezerwację
-              </button>
-              <p class="text-[#14211a]/40 text-xs text-center">* Skontaktujemy się w ciągu 24h, by potwierdzić termin.</p>
-            </form>
-          </div>
+      <div class="grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+        <!-- Form -->
+        <div class="reveal-l nb nb-shadow-lg bg-white p-7 lg:p-10">
+          <form id="booking-form" class="grid gap-5">
+            <div class="grid sm:grid-cols-2 gap-5">
+              <label class="mono text-xs font-bold uppercase tracking-wide">
+                Imię i nazwisko *
+                <input type="text" required placeholder="Jan Kowalski"
+                  class="nb2 mt-1 w-full bg-[#f3f3ee] px-3 py-2 font-body text-base outline-none focus:bg-[#b6ff1a] transition-colors" />
+              </label>
+              <label class="mono text-xs font-bold uppercase tracking-wide">
+                Telefon *
+                <input type="tel" required placeholder="+48 600 123 456"
+                  class="nb2 mt-1 w-full bg-[#f3f3ee] px-3 py-2 font-body text-base outline-none focus:bg-[#b6ff1a] transition-colors" />
+              </label>
+            </div>
+            <label class="mono text-xs font-bold uppercase tracking-wide">
+              Adres e-mail *
+              <input type="email" required placeholder="jan@email.pl"
+                class="nb2 mt-1 w-full bg-[#f3f3ee] px-3 py-2 font-body text-base outline-none focus:bg-[#b6ff1a] transition-colors" />
+            </label>
+            <div class="grid sm:grid-cols-2 gap-5">
+              <label class="mono text-xs font-bold uppercase tracking-wide">
+                Rodzaj usługi
+                <select class="nb2 mt-1 w-full bg-[#f3f3ee] px-3 py-2 font-body text-base outline-none focus:bg-[#b6ff1a] transition-colors">
+                  <option value="">Wybierz usługę</option>
+                  <option>Fizjoterapia</option>
+                  <option>Terapia manualna</option>
+                  <option>Masaż leczniczy</option>
+                  <option>Rehabilitacja po urazach</option>
+                  <option>Fizykoterapia</option>
+                  <option>Bezpłatna konsultacja</option>
+                </select>
+              </label>
+              <label class="mono text-xs font-bold uppercase tracking-wide">
+                Preferowany termin
+                <input type="date"
+                  class="nb2 mt-1 w-full bg-[#f3f3ee] px-3 py-2 font-body text-base outline-none focus:bg-[#b6ff1a] transition-colors" />
+              </label>
+            </div>
+            <label class="mono text-xs font-bold uppercase tracking-wide">
+              Opisz swój problem (opcjonalnie)
+              <textarea rows="4" placeholder="Opisz dolegliwości lub cel wizyty..."
+                class="nb2 mt-1 w-full bg-[#f3f3ee] px-3 py-2 font-body text-base outline-none focus:bg-[#b6ff1a] transition-colors resize-none"></textarea>
+            </label>
+            <button type="submit" class="disp nb nb-shadow bg-[#ff6a00] text-white px-6 py-4 text-xl nb-press w-full text-center">WYŚLIJ REZERWACJĘ →</button>
+            <p class="mono text-xs text-[#0a0a0a]/40 text-center uppercase">* Skontaktujemy się w ciągu 24h, by potwierdzić termin.</p>
+          </form>
         </div>
 
-        <!-- Contact info + hours — 2 cols -->
-        <div class="lg:col-span-2 reveal-right flex flex-col gap-6">
-          <!-- Hours -->
-          <div class="bg-white rounded-3xl p-6 shadow-sm">
-            <h3 class="text-base font-bold text-[#14211a] mb-4 flex items-center gap-2" style="font-family: var(--font-display);">
-              <svg class="w-5 h-5 text-[#16a34a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              Godziny otwarcia
-            </h3>
+        <!-- Contact + hours + map -->
+        <div class="reveal-r flex flex-col gap-5">
+          <!-- Godziny -->
+          <div class="nb nb-shadow bg-[#0a0a0a] p-6">
+            <span class="mono text-[#b6ff1a] text-xs font-bold uppercase tracking-widest block mb-4">// Godziny otwarcia</span>
             <div class="space-y-3">
               {godziny.map((g) => (
-                <div class="flex justify-between items-center py-2 border-b border-[#f3faf4] last:border-0">
-                  <span class="text-sm text-[#14211a]/70 font-medium">{g.dzien}</span>
-                  <span class={`text-sm font-bold ${g.godz === "Zamknięte" ? "text-red-400" : "text-[#16a34a]"}`} style="font-family: var(--font-display);">{g.godz}</span>
+                <div class="mono flex items-center justify-between text-sm font-bold">
+                  <span class="text-white/70 uppercase">{g.dzien}</span>
+                  <span class={g.open ? "bg-[#b6ff1a] text-[#0a0a0a] px-2 py-0.5" : "text-red-400"}>{g.godz}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <!-- Contact details -->
-          <div class="bg-white rounded-3xl p-6 shadow-sm">
-            <h3 class="text-base font-bold text-[#14211a] mb-4 flex items-center gap-2" style="font-family: var(--font-display);">
-              <svg class="w-5 h-5 text-[#16a34a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-              </svg>
-              Kontakt
-            </h3>
+          <!-- Kontakt -->
+          <div class="nb nb-shadow bg-white p-6">
+            <span class="mono text-[#0a0a0a]/50 text-xs font-bold uppercase tracking-widest block mb-4">// Kontakt</span>
             <div class="space-y-3">
-              <a href="tel:+48221234567" class="flex items-center gap-3 text-sm text-[#14211a]/70 hover:text-[#16a34a] transition-colors duration-200 group">
-                <div class="w-8 h-8 bg-[#dcfce7] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-[#16a34a] transition-colors duration-200">
-                  <svg class="w-4 h-4 text-[#16a34a] group-hover:text-white transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                  </svg>
-                </div>
+              <a href="tel:+48221234567" class="mono flex items-center gap-3 text-sm font-bold text-[#0a0a0a] hover:text-[#15803d] transition-colors group">
+                <span class="nb2 bg-[#b6ff1a] px-2 py-1 text-[#0a0a0a] group-hover:bg-[#15803d] group-hover:text-white transition-colors">TEL</span>
                 +48 22 123 45 67
               </a>
-              <a href="mailto:kontakt@revita.pl" class="flex items-center gap-3 text-sm text-[#14211a]/70 hover:text-[#16a34a] transition-colors duration-200 group">
-                <div class="w-8 h-8 bg-[#dcfce7] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-[#16a34a] transition-colors duration-200">
-                  <svg class="w-4 h-4 text-[#16a34a] group-hover:text-white transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                  </svg>
-                </div>
+              <a href="mailto:kontakt@revita.pl" class="mono flex items-center gap-3 text-sm font-bold text-[#0a0a0a] hover:text-[#15803d] transition-colors group">
+                <span class="nb2 bg-[#b6ff1a] px-2 py-1 text-[#0a0a0a] group-hover:bg-[#15803d] group-hover:text-white transition-colors">EMAIL</span>
                 kontakt@revita.pl
               </a>
-              <div class="flex items-center gap-3 text-sm text-[#14211a]/70">
-                <div class="w-8 h-8 bg-[#dcfce7] rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-[#16a34a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                  </svg>
-                </div>
+              <div class="mono flex items-start gap-3 text-sm font-bold text-[#0a0a0a]">
+                <span class="nb2 bg-[#b6ff1a] px-2 py-1 shrink-0">ADR</span>
                 ul. Puławska 42, 02-512 Warszawa
               </div>
             </div>
           </div>
 
-          <!-- Map -->
-          <div class="bg-white rounded-3xl overflow-hidden shadow-sm flex-1 min-h-[200px]">
+          <!-- Mapa OSM -->
+          <div class="nb nb-shadow overflow-hidden flex-1 min-h-[200px]">
             <iframe
               src="https://www.openstreetmap.org/export/embed.html?bbox=21.00%2C52.18%2C21.04%2C52.22&layer=mapnik&marker=52.200%2C21.020"
-              width="100%"
-              height="220"
-              style="border:0;"
+              width="100%" height="240"
+              style="border:0;display:block;"
               loading="lazy"
               title="Mapa dojazdu do ReVita"
-              class="w-full h-full min-h-[220px]"
             ></iframe>
           </div>
         </div>
@@ -863,94 +458,57 @@ const opinie = [
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       FOOTER
-  ══════════════════════════════════════════════════ -->
-  <footer class="bg-[#14211a] relative overflow-hidden">
-    <!-- Top wave -->
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#16a34a]/40 to-transparent"></div>
-
-    <!-- Decorative bg elements -->
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-[#16a34a]/5 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute top-0 left-1/4 w-64 h-64 bg-[#a3e635]/5 rounded-full blur-3xl pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-6 py-16 relative z-10">
-      <div class="grid md:grid-cols-4 gap-10 mb-12">
+  <!-- ===== FOOTER ===== -->
+  <footer class="border-t-4 border-[#0a0a0a] bg-[#0a0a0a] px-4 py-14 lg:px-8 text-[#f3f3ee]">
+    <div class="mx-auto max-w-[1440px]">
+      <div class="grid gap-10 md:grid-cols-[1fr_auto_auto] items-start">
         <!-- Brand -->
-        <div class="md:col-span-2">
-          <a href="#" class="flex items-center gap-2.5 mb-4 group">
-            <div class="w-9 h-9 rounded-xl bg-[#16a34a] flex items-center justify-center">
-              <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-white">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="currentColor"/>
-              </svg>
-            </div>
-            <span class="text-xl font-bold text-white tracking-tight" style="font-family: var(--font-display);">
-              Re<span class="text-[#a3e635]">Vita</span>
-            </span>
-          </a>
-          <p class="text-white/50 text-sm leading-relaxed max-w-sm mb-6">
-            Gabinet fizjoterapii i rehabilitacji w Warszawie. Przywracamy sprawność i jakość życia naszym pacjentom od 2009 roku.
+        <div>
+          <a href="#top" class="disp inline-block bg-[#b6ff1a] text-[#0a0a0a] px-5 py-3 text-4xl nb-press nb nb-shadow-lime">REVITA</a>
+          <p class="mt-4 text-[#f3f3ee]/50 text-sm max-w-sm leading-relaxed">
+            Gabinet fizjoterapii i rehabilitacji w Warszawie. Przywracamy sprawność i jakość życia od 2009 roku.
           </p>
-          <div class="flex gap-3">
-            {["facebook", "instagram", "linkedin"].map((s) => (
-              <a
-                href="#"
-                class="w-9 h-9 bg-white/5 hover:bg-[#16a34a] rounded-lg flex items-center justify-center transition-colors duration-200"
-                aria-label={s}
-              >
-                <svg class="w-4 h-4 text-white/60 hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="4"/>
-                </svg>
-              </a>
+          <div class="mono mt-4 flex gap-3">
+            {["FB","IG","LN"].map((s) => (
+              <a href="#" class="nb2 border-[#f3f3ee]/30 text-[#f3f3ee]/50 hover:bg-[#b6ff1a] hover:text-[#0a0a0a] hover:border-[#b6ff1a] px-3 py-2 text-xs font-bold transition-colors">{s}</a>
             ))}
           </div>
         </div>
 
-        <!-- Quick links -->
+        <!-- Usługi links -->
         <div>
-          <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-widest" style="font-family: var(--font-display);">Usługi</h4>
+          <span class="mono text-[#b6ff1a] text-xs font-bold uppercase tracking-widest block mb-4">Usługi</span>
           <ul class="space-y-2">
-            {["Fizjoterapia", "Terapia manualna", "Masaż leczniczy", "Rehabilitacja", "Fizykoterapia"].map((item) => (
-              <li>
-                <a href="#uslugi" class="text-white/50 hover:text-[#a3e635] text-sm transition-colors duration-200 hover:translate-x-1 inline-block transition-transform">{item}</a>
-              </li>
+            {["Fizjoterapia","Terapia manualna","Masaż leczniczy","Rehabilitacja","Fizykoterapia"].map((item) => (
+              <li><a href="#uslugi" class="mono text-[#f3f3ee]/50 hover:text-[#b6ff1a] text-sm font-bold uppercase transition-colors">{item}</a></li>
             ))}
           </ul>
         </div>
 
-        <!-- Contact -->
+        <!-- Kontakt dane -->
         <div>
-          <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-widest" style="font-family: var(--font-display);">Kontakt</h4>
-          <ul class="space-y-2">
-            <li class="text-white/50 text-sm">ul. Puławska 42</li>
-            <li class="text-white/50 text-sm">02-512 Warszawa</li>
-            <li class="mt-3">
-              <a href="tel:+48221234567" class="text-white/50 hover:text-[#a3e635] text-sm transition-colors duration-200">+48 22 123 45 67</a>
-            </li>
-            <li>
-              <a href="mailto:kontakt@revita.pl" class="text-white/50 hover:text-[#a3e635] text-sm transition-colors duration-200">kontakt@revita.pl</a>
-            </li>
+          <span class="mono text-[#b6ff1a] text-xs font-bold uppercase tracking-widest block mb-4">Kontakt</span>
+          <ul class="space-y-2 mono text-[#f3f3ee]/50 text-sm font-bold uppercase">
+            <li>ul. Puławska 42</li>
+            <li>02-512 Warszawa</li>
+            <li class="mt-3"><a href="tel:+48221234567" class="hover:text-[#b6ff1a] transition-colors">+48 22 123 45 67</a></li>
+            <li><a href="mailto:kontakt@revita.pl" class="hover:text-[#b6ff1a] transition-colors">kontakt@revita.pl</a></li>
           </ul>
         </div>
       </div>
 
       <!-- Bottom bar -->
-      <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-white/30 text-xs">
-          &copy; {new Date().getFullYear()} ReVita. Wszelkie prawa zastrzeżone.
-        </p>
-        <p class="text-white/30 text-xs text-center">
+      <div class="mt-12 border-t border-[#f3f3ee]/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="mono text-[#f3f3ee]/30 text-xs uppercase">&copy; {new Date().getFullYear()} ReVita. Wszelkie prawa zastrzeżone.</p>
+        <p class="mono text-[#f3f3ee]/30 text-xs uppercase text-center">
           Przykładowa strona zrobiona przez{" "}
-          <a
-            href="https://stronainternetowa.biz"
-            target="_blank"
-            rel="noopener"
-            class="text-[#a3e635] hover:text-white transition-colors duration-200 font-medium"
-          >
+          <a href="https://stronainternetowa.biz" target="_blank" rel="noopener"
+             class="bg-[#b6ff1a] text-[#0a0a0a] px-1 font-bold hover:bg-white transition-colors">
             stronainternetowa.biz
           </a>
         </p>
       </div>
     </div>
   </footer>
+
 </Layout>
